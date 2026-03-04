@@ -53,3 +53,16 @@ Managing data flow in React was initially confusing. It took time and practice t
 There are many different approaches to linking a Node.js backend with MySQL and MongoDB. I experimented with multiple tutorials and code examples before finding a method that worked reliably for my project.
 - <b>Implementing responsive design</b>
 Making the layout adapt across desktop and mobile was challenging, so I used Material UI to handle responsiveness more efficiently and avoid writing complex CSS from scratch.
+
+## How to run the project
+1. start MySQL and Apache service on Xammp
+2. run backend
+```
+> cd backend
+> npm start
+```
+3. run forntend
+```
+> cd flashcard-react
+> npm start
+```

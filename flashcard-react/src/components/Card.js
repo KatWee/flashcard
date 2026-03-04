@@ -11,6 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
 import CheckIcon from '@mui/icons-material/Check';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import Modal from './Modal.js';
 
 const bull = (
   <Box
@@ -20,13 +22,14 @@ const bull = (
   </Box>
 );
 
-export default function MyCard({ id, question = 'Question', answer = 'This is an answer', btn, onDelete }) {
+export default function MyCard({ id, question = 'Question', answer = 'This is an answer', btn, onDelete, onEdit }) {
 
   const [showAnswer, setShowAnswer] = useState(false);
   const toggleAnswer = () => setShowAnswer((s) => !s);
+  const [editOpen, setEditOpen] = useState(false);
 
   return (
-    <Card sx={{ width: 320, maxWidth: '100%' }}>
+    <Card sx={{ width: 320, maxWidth: '100%', textAlign:'center' }}>
       <CardContent>
         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
           <LiveHelpIcon />
@@ -48,7 +51,11 @@ export default function MyCard({ id, question = 'Question', answer = 'This is an
         </Typography>
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button size="small" onClick={() => setEditOpen(true)}><EditNoteIcon/></Button>
         <Button size="small" onClick={() => onDelete(id)}><DeleteIcon sx={{color: '#d32f2f'}} /></Button>
+        {editOpen && (
+          <Modal isEdit={true} cardId={id} initialQuestion={question} initialAnswer={answer} onEdit={(cardId, data) => { onEdit(cardId, data); setEditOpen(false); }} />
+        )}
       </CardActions>
     </Card>
   );

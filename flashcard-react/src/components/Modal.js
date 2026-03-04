@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CreateIcon from '@mui/icons-material/Create';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 
 import { TextField } from '@mui/material';
@@ -21,28 +21,32 @@ const style = {
     borderRadius: '25px',
 };
 
-export default function BasicModal( {onCreate} ) {
-  const [open, setOpen] = React.useState(false);
+export default function BasicModal( {onCreate, onEdit, cardId, initialQuestion = '', initialAnswer = '', isEdit = false} ) {
+  const [open, setOpen] = React.useState(isEdit);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [question, setQuestion] = React.useState('');
-  const [answer, setAnswer] = React.useState('');
+  const [question, setQuestion] = React.useState(isEdit ? initialQuestion : '');
+  const [answer, setAnswer] = React.useState(isEdit ? initialAnswer : '');
 
     const handleSubmit = () => {
-        if (onCreate) {
-            onCreate({ question: question || 'Untitled question', answer: answer});
+        if (isEdit && onEdit) {
+            onEdit(cardId, { question: question, answer: answer});
+        } else if (!isEdit && onCreate) {
+            onCreate({ question: question, answer: answer});
         }
-        setQuestion('');
-        setAnswer('');
+        setQuestion(isEdit ? initialQuestion : '');
+        setAnswer(isEdit ? initialAnswer : '');
         handleClose();
     };
 
   return (
     <div>
-        <Button onClick={handleOpen}>
-            <CreateIcon /> Create new card
-        </Button>
+        {!isEdit && (
+            <Button onClick={handleOpen}>
+                <CreateIcon /> Create new card
+            </Button>
+        )}
         <Modal
             open={open}
             onClose={handleClose}
@@ -51,12 +55,13 @@ export default function BasicModal( {onCreate} ) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    <CreateIcon /> Create new card
+                    {isEdit ? <EditNoteIcon /> : <CreateIcon />} 
+                    {isEdit ? 'Edit Card' : 'Create new card'}
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <TextField label="Question" variant="outlined" value={question} onChange={(e) => setQuestion(e.target.value)} />
                     <TextField label="Answer" variant="outlined" value={answer} onChange={(e) => setAnswer(e.target.value)} />
-                    <Button variant="contained" onClick={handleSubmit} disabled={!question.trim() || !answer.trim()}>Create Card</Button>
+                    <Button variant="contained" onClick={handleSubmit} disabled={!question.trim() || !answer.trim()}>{isEdit ? 'Update Card' : 'Create Card'}</Button>
                 </Typography>
             </Box>
             

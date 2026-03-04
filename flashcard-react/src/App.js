@@ -1,4 +1,3 @@
-import './App.css';
 import MyButtonGroup from './components/ButtonGroup.js';
 import MyCard from './components/Card.js';
 
@@ -42,9 +41,22 @@ function App() {
       .catch((err) => console.error(err));
   };
 
+  const updateCard = (id, cardData) => {
+    fetch(`http://localhost:8081/cards/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cardData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCards((prev) => prev.map((c) => (c.id === id ? { ...c, ...cardData } : c)));
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="App">
-      <h1>Flash Card</h1>
+      <h1 style={{ textAlign: 'center' }}>Flash Card</h1>
 
       <div>
         < MyButtonGroup onCreate={addCard} />
@@ -52,7 +64,7 @@ function App() {
           <Grid container spacing={2}>
               {[...cards].sort((a, b) => b.id - a.id).map((card) => (
                 <Grid item xs={12} sm={6} md={4} key={card.id} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <MyCard id={card.id} question={card.question} answer={card.answer} onDelete={deleteCard} />
+                  <MyCard id={card.id} question={card.question} answer={card.answer} onDelete={deleteCard} onEdit={updateCard} />
                 </Grid>
               ))}
           </Grid>

@@ -51,6 +51,17 @@ app.delete('/cards/:id', (req, res) => {
     });
 });
 
+// update a card in the database
+app.put('/cards/:id', (req, res) => {
+    const { id } = req.params;
+    const { question, answer } = req.body;
+    const sql = "UPDATE card SET question = ?, answer = ? WHERE id = ?";
+    db.query(sql, [question, answer, id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.json({ success: true, id, question, answer });
+    });
+});
+
 app.listen(8081,()=>{
     console.log("listening")
 })

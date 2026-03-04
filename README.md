@@ -31,9 +31,9 @@ I use MySQL as the database because the flashcard data follows a fixed, structur
 ├─Flashcard
     ├─Backend
     │   ├─server.js (connecting to the database.)
-        ├─package-lock.json
-        └─package.json
-    ├─flashcard-react (Frontend)
+    │   ├─package-lock.json
+    │   └─package.json
+    └─flashcard-react (Frontend)
         ├─public (static files)
         │ └─index.html (Single HTML file where the entire React app is mounted.)
         ├─src

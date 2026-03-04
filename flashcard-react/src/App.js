@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import MyButtonGroup from './components/ButtonGroup.js';
 import MyCard from './components/Card.js';
@@ -6,11 +5,10 @@ import MyCard from './components/Card.js';
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { useEffect } from 'react';
 
 function App() {
-  const [cards, setCards] = useState([
-    { id: 1, question: 'What is This subject?', answer: '32516 Internet Programming'},
-  ]);
+  const [cards, setCards] = useState([]);
 
   const addCard = (card) => {
     const id = cards.length ? Math.max(...cards.map((c) => c.id)) + 1 : 1;
@@ -20,6 +18,13 @@ function App() {
   const deleteCard = (id) => {
     setCards((prev) => prev.filter((c) => c.id !== id));
   };
+
+  useEffect(() => {
+    fetch('http://localhost:8081/cards')
+      .then((res) => res.json())
+      .then((data) => setCards(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="App">

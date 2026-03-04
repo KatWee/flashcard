@@ -10,21 +10,37 @@ import { useEffect } from 'react';
 function App() {
   const [cards, setCards] = useState([]);
 
-  const addCard = (card) => {
-    const id = cards.length ? Math.max(...cards.map((c) => c.id)) + 1 : 1;
-    setCards((prev) => [...prev, { id, ...card}]);
-  };
-
-  const deleteCard = (id) => {
-    setCards((prev) => prev.filter((c) => c.id !== id));
-  };
-
-  useEffect(() => {
+    useEffect(() => {
     fetch('http://localhost:8081/cards')
       .then((res) => res.json())
       .then((data) => setCards(data))
       .catch((err) => console.error(err));
   }, []);
+
+  const addCard = (card) => {
+    fetch('http://localhost:8081/cards', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(card),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCards((prev) => [...prev, data]);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const deleteCard = (id) => {
+    fetch(`http://localhost:8081/cards/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCards((prev) => prev.filter((c) => c.id !== id));
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="App">

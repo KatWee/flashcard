@@ -21,10 +21,22 @@ const style = {
     borderRadius: '25px',
 };
 
-export default function BasicModal( {btn} ) {
+export default function BasicModal( {btn, onCreate} ) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [question, setQuestion] = React.useState('');
+  const [answer, setAnswer] = React.useState('');
+
+    const handleSubmit = () => {
+        if (btn === 'create' && onCreate) {
+            onCreate({ question: question || 'Untitled question', answer: answer || '', btn: 'create' });
+        }
+        setQuestion('');
+        setAnswer('');
+        handleClose();
+    };
 
   return (
     <div>
@@ -44,9 +56,9 @@ export default function BasicModal( {btn} ) {
                         <CreateIcon /> Create new card
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <TextField label="Question" variant="outlined" />
-                        <TextField label="Answer" variant="outlined" />
-                        <Button variant="contained">Create Card</Button>
+                        <TextField label="Question" variant="outlined" value={question} onChange={(e) => setQuestion(e.target.value)} />
+                        <TextField label="Answer" variant="outlined" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+                        <Button variant="contained" onClick={handleSubmit} disabled={!question.trim() || !answer.trim()}>Create Card</Button>
                     </Typography>
                 </Box>
             ) : (

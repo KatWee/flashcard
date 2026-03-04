@@ -14,6 +14,21 @@ const db = mysql.createConnection({
     database: "flashcard"
 })  
 
+// handle disconnect
+db.on('error', (err) => {
+    console.log('Database error:', err);
+});
+
+// health check endpoint
+app.get('/health', (req, res) => {
+    db.ping((err) => {
+        if (err) {
+            return res.status(500).json({ status: 'error', message: 'Database connection failed' });
+        }
+        res.json({ status: 'ok', message: 'Database connected' });
+    });
+});
+
 // test connection
 app.get('/',(re, res)=>{
     return res.json("From backend")

@@ -19,7 +19,7 @@ const style = {
     borderRadius: '25px',
 };
 
-export default function BasicModal( {onCreate, onEdit, cardId, initialQuestion = '', initialAnswer = '', isEdit = false} ) {
+export default function BasicModal( {onCreate, onEdit, cardId, initialQuestion = '', initialAnswer = '', isEdit = false, dbError} ) {
     const [open, setOpen] = React.useState(isEdit);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -44,7 +44,7 @@ export default function BasicModal( {onCreate, onEdit, cardId, initialQuestion =
         <div>
             {/* only for create mode */}
             {!isEdit && (
-                <Button onClick={handleOpen}>
+                <Button onClick={handleOpen} disabled={dbError}>
                     <CreateIcon /> Create new card
                 </Button>
             )}

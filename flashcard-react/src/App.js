@@ -8,13 +8,29 @@ import { useEffect } from 'react';
 
 function App() {
     const [cards, setCards] = useState([]);
+    const [dbError, setDbError] = useState(false);
 
-    // read cards from database
+    // check database connection and show the cards
     useEffect(() => {
-    fetch('http://localhost:8081/cards')
-      .then((res) => res.json())
-      .then((data) => setCards(data))
-      .catch((err) => console.error(err));
+        fetch('http://localhost:8081/health')
+            .then((res) => {
+                if (res.ok) {
+                    setDbError(false);
+                    // fetch cards only if database is connected
+                    return fetch('http://localhost:8081/cards');
+                } else {
+                    setDbError(true);
+                    return null;
+                }
+            })
+            .then((res) => res ? res.json() : null)
+            .then((data) => {
+                if (data) setCards(data);
+            })
+            .catch((err) => {
+                setDbError(true);
+                console.error(err);
+            });
     }, []);
 
     // add new card to database
@@ -63,8 +79,17 @@ function App() {
     <div className="App">
       <h1 style={{ textAlign: 'center' }}>Flash Card</h1>
 
+      {dbError && (
+        <div style={{
+          color: '#c62828',
+          textAlign: 'center',
+        }}>
+          Unable to connect to database.
+        </div>
+      )}
+
       <div>
-        < MyButtonGroup onCreate={addCard} />
+        < MyButtonGroup onCreate={addCard} dbError={dbError}/>
         <Box sx={{ flexGrow: 1, mx:5 }}>
           <Grid container spacing={2}>
               {/* sort cards by id in descending order and display them */}

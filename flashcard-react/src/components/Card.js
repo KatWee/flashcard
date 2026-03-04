@@ -34,9 +34,12 @@ export default function MyCard({ id, question = 'Question', answer = 'This is an
         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
           <LiveHelpIcon />
         </Typography>
+        {/* question */}
         <Typography variant="h5" component="div" sx={{ wordBreak: 'break-word' }}>
           {question}
         </Typography>
+
+        {/* answer */}
         <Typography variant="body2">
           <Button onClick={toggleAnswer}>
             {showAnswer ? <VisibilityOffSharpIcon /> : <VisibilitySharpIcon />}
@@ -45,11 +48,15 @@ export default function MyCard({ id, question = 'Question', answer = 'This is an
           {showAnswer && (
             <Typography component="p" variant="body2" sx={{ wordBreak: 'break-word' }}>
               <p>{answer}</p>
+
+              {/* delete button after show answer */}
               <Button size="small" onClick={() => onDelete(id)}><CheckIcon sx={{color: '#rgb(5, 161, 75)'}} /></Button>
             </Typography>
           )}
         </Typography>
       </CardContent>
+
+      {/* edit and delete buttons */}
       <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button size="small" onClick={() => setEditOpen(true)}><EditNoteIcon/></Button>
         <Button size="small" onClick={() => onDelete(id)}><DeleteIcon sx={{color: '#d32f2f'}} /></Button>

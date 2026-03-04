@@ -6,6 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// connect to database
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -13,10 +14,12 @@ const db = mysql.createConnection({
     database: "flashcard"
 })  
 
+// test connection
 app.get('/',(re, res)=>{
     return res.json("From backend")
 })
 
+// get all cards from the database
 app.get('/cards',(req, res)=>{
     const sql = "SELECT * FROM card"
     db.query(sql,(err, data)=>{

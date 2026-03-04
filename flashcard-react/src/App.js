@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 
 function App() {
   const [cards, setCards] = useState([
-    { id: 1, question: 'What is This subject?', answer: '32516 Internet Programming', btn: 'create' },
+    { id: 1, question: 'What is This subject?', answer: '32516 Internet Programming'},
   ]);
 
   const addCard = (card) => {
@@ -31,7 +31,7 @@ function App() {
           <Grid container spacing={2}>
               {[...cards].sort((a, b) => b.id - a.id).map((card) => (
                 <Grid item xs={12} sm={6} md={4} key={card.id} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <MyCard id={card.id} question={card.question} answer={card.answer} btn={card.btn} onDelete={deleteCard} />
+                  <MyCard id={card.id} question={card.question} answer={card.answer} onDelete={deleteCard} />
                 </Grid>
               ))}
           </Grid>

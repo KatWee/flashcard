@@ -6,8 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 
-import PersonIcon from '@mui/icons-material/Person';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
@@ -29,7 +28,7 @@ export default function MyCard({ id, question = 'Question', answer = 'This is an
     <Card sx={{ width: 320, maxWidth: '100%' }}>
       <CardContent>
         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-          {btn === 'create' ? <PersonIcon /> : <AutoAwesomeIcon />}
+          <LiveHelpIcon />
         </Typography>
         <Typography variant="h5" component="div" sx={{ wordBreak: 'break-word' }}>
           {question}

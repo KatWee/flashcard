@@ -18,7 +18,6 @@ export default function MyButtonGroup({ onCreate }) {
     >
       <ButtonGroup variant="outlined" aria-label="Basic button group">
         <Modal btn="create" onCreate={onCreate} />
-        <Modal btn="generate" />
       </ButtonGroup>
     </Box>
   );

@@ -21,7 +21,7 @@ const style = {
     borderRadius: '25px',
 };
 
-export default function BasicModal( {btn, onCreate} ) {
+export default function BasicModal( {onCreate} ) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -30,8 +30,8 @@ export default function BasicModal( {btn, onCreate} ) {
   const [answer, setAnswer] = React.useState('');
 
     const handleSubmit = () => {
-        if (btn === 'create' && onCreate) {
-            onCreate({ question: question || 'Untitled question', answer: answer || '', btn: 'create' });
+        if (onCreate) {
+            onCreate({ question: question || 'Untitled question', answer: answer});
         }
         setQuestion('');
         setAnswer('');
@@ -41,8 +41,7 @@ export default function BasicModal( {btn, onCreate} ) {
   return (
     <div>
         <Button onClick={handleOpen}>
-            {btn == 'create' ? <CreateIcon /> : <AutoAwesomeIcon />}
-            {btn == 'create' ? 'Create new card' : 'Generate new card'}
+            <CreateIcon /> Create new card
         </Button>
         <Modal
             open={open}
@@ -50,28 +49,16 @@ export default function BasicModal( {btn, onCreate} ) {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            {btn == 'create' ? (
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <CreateIcon /> Create new card
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <TextField label="Question" variant="outlined" value={question} onChange={(e) => setQuestion(e.target.value)} />
-                        <TextField label="Answer" variant="outlined" value={answer} onChange={(e) => setAnswer(e.target.value)} />
-                        <Button variant="contained" onClick={handleSubmit} disabled={!question.trim() || !answer.trim()}>Create Card</Button>
-                    </Typography>
-                </Box>
-            ) : (
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <AutoAwesomeIcon /> Generate new card
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <TextField label="Topic" variant="outlined" />
-                        <Button variant="contained">Create Card</Button>
-                    </Typography>
-                </Box>
-            )  }
+            <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <CreateIcon /> Create new card
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <TextField label="Question" variant="outlined" value={question} onChange={(e) => setQuestion(e.target.value)} />
+                    <TextField label="Answer" variant="outlined" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+                    <Button variant="contained" onClick={handleSubmit} disabled={!question.trim() || !answer.trim()}>Create Card</Button>
+                </Typography>
+            </Box>
             
         </Modal>
     </div>

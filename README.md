@@ -28,7 +28,7 @@ I use MySQL as the database because the flashcard data follows a fixed, structur
 
 ## The folder structure
 ```bash
-├─Flashcard
+└─Flashcard
     ├─Backend
     │   ├─server.js (connecting to the database.)
     │   ├─package-lock.json

@@ -10,6 +10,7 @@ import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
+import CheckIcon from '@mui/icons-material/Check';
 
 const bull = (
   <Box
@@ -40,7 +41,8 @@ export default function MyCard({ id, question = 'Question', answer = 'This is an
           </Button>
           {showAnswer && (
             <Typography component="p" variant="body2" sx={{ wordBreak: 'break-word' }}>
-              {answer}
+              <p>{answer}</p>
+              <Button size="small" onClick={() => onDelete(id)}><CheckIcon sx={{color: '#rgb(5, 161, 75)'}} /></Button>
             </Typography>
           )}
         </Typography>
